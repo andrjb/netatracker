@@ -1,3 +1,7 @@
+# author:       andrjb
+# date:         2022-02-08
+# description:  sets up a simple web server for the netatracker bot
+#---------------------------------------------------------------------------------
 from flask import Flask
 from threading import Thread
 
