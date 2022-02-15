@@ -1,5 +1,5 @@
 # netatracker
-A simple Discord bot that pulls the current NETA/ERG price from the ErgoDEX API. Can be used as sidebar bot and can send current price in a message on command. 
+A simple Discord bot that pulls data from ErgoDEX, Sundaeswap and BlockFrost. This bot can display NETA and cNETA prices, show the live stake in the LISO pools and creates a table with all prices in form of a "stickied post". 
 ## How to use 
 The bot answers on the following commands: 
 * !neta -> neta/erg price from ErgoDEX api
