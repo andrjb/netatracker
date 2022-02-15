@@ -38,12 +38,11 @@ def get_price():
       return(0, 0, int(response.status_code))
 #---------------------------------------------------------------------------------
 
-#Makes API call and calculates price with amount of tokens in LP
+#Makes API call from coingecko
 def erg_price():
     response = requests.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=ergo&vs_currencies=usd"
     )
-    print(response.status_code)
     if int(response.status_code) == 200:
       json_data = json.loads(response.text)
       result = json.dumps(json_data)
@@ -53,4 +52,34 @@ def erg_price():
     else: 
       print("Error occured: " + str(response.status_code))
       return(0, 0, int(response.status_code))
+#---------------------------------------------------------------------------------
+
+#Makes API call from coingecko
+def ada_price():
+    response = requests.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
+    )
+    if int(response.status_code) == 200:
+      json_data = json.loads(response.text)
+      result = json.dumps(json_data)
+      ada = str(result)
+      ada = cut_amount(ada, "usd", '}',6)
+      return (ada, int(response.status_code))
+    else: 
+      print("Error occured: " + str(response.status_code))
+      return(0, 0, int(response.status_code))
+#---------------------------------------------------------------------------------
+
+#builds table for stickied price post
+def buildtable(netergprice, ergnetprice, cnetaprice, erg, ada):
+  netusd = ergnetprice*erg
+  cnetusd = cnetaprice*ada
+  netergstr = f"{netergprice:.5f}"
+  cnetaprstr = f"{cnetaprice:.5f}"
+  ergstr = f"{erg:.5f}" 
+  adastr = f"{ada:.5f}" 
+  netusdstr = f"{netusd:.5f}" #
+  cnetusdstr = f"{cnetusd:.5f}" 
+  s = '```' + '\n┌───────────┬───────────┬──────┐' + '\n│ Pair      │ Price     │ curr │''\n├───────────┼───────────┼──────┤'+ '\n│ NETA/ERG  │ ' + netergstr + ' │' +   ' NETA │' +'\n├───────────┼───────────┼──────┤' + '\n│ NETA/USD  │ ' + netusdstr + '   │' + ' USD  │' +'\n├───────────┼───────────┼──────┤' + '\n│ cNETA/ADA │ '+cnetaprstr+'   │'+     ' ADA  │' +'\n├───────────┼───────────┼──────┤' + '\n│ cNETA/USD │ ' + cnetusdstr + '   │' + ' USD  │' +'\n├───────────┼───────────┼──────┤' + '\n│ ADA/USD   │ ' + adastr + '   │' +    ' USD  │' +'\n├───────────┼───────────┼──────┤' + '\n│ ERG/USD   │ ' + ergstr + '   │' +    ' USD  │' +'\n└───────────┴───────────┴──────┘' + '\n table updates every 30 seconds' + '```'
+  return(s)
 #---------------------------------------------------------------------------------
